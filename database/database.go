@@ -10,27 +10,32 @@ import (
 )
 
 type Product struct {
-	gorm.Model              // ID, CreatedAt, UpdatedAt, DeletedAt
-	Name          string    `json:"name"`           // 商品名称
-	MainBarcode   string    `json:"main_barcode"`   // 主条码
-	ProductModel  string    `json:"model"`          // 商品型号
-	Weight        int       `json:"weight"`         // 重量
-	Specification string    `json:"specification"`  // 规格
-	TargetAddress string    `json:"target_address"` // 目标地址
-	Manual        string    `json:"manual"`         // 说明书
-	SubMaterials  StringArr `json:"sub_materials"`  // 子物料，实际存储为 JSON 字符串
+	gorm.Model                   // ID, CreatedAt, UpdatedAt, DeletedAt
+	Name          string         `json:"name"`           // 商品名称
+	MainBarcode   string         `json:"main_barcode"`   // 主条码
+	ProductModel  string         `json:"model"`          // 商品型号
+	Weight        int            `json:"weight"`         // 重量
+	Specification string         `json:"specification"`  // 规格
+	TargetAddress string         `json:"target_address"` // 目标地址
+	Manual        string         `json:"manual"`         // 说明书
+	SubMaterials  SubMaterialArr `json:"sub_materials"`  // 子物料，实际存储为 JSON 字符串
 }
 
-type StringArr []string
+type SubMaterial struct {
+	Name       string `json:"name"`
+	SubBarcode string `json:"sub_barcode"`
+}
 
-func (s StringArr) Value() (driver.Value, error) {
+type SubMaterialArr []SubMaterial
+
+func (s SubMaterialArr) Value() (driver.Value, error) {
 	if s == nil {
 		return "[]", nil
 	}
 	return json.Marshal(s)
 }
 
-func (s *StringArr) Scan(value interface{}) error {
+func (s *SubMaterialArr) Scan(value interface{}) error {
 	bytes, ok := value.([]byte)
 	if !ok {
 		return errors.New(fmt.Sprint("Failed to scan Array value:", value))
@@ -38,7 +43,7 @@ func (s *StringArr) Scan(value interface{}) error {
 	if len(bytes) > 0 {
 		return json.Unmarshal(bytes, s)
 	}
-	*s = make([]string, 0)
+	*s = make([]SubMaterial, 0)
 	return nil
 }
 
