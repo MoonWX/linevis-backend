@@ -14,7 +14,7 @@ type Product struct {
 	Name          string         `json:"name"`           // 商品名称
 	MainBarcode   string         `json:"main_barcode"`   // 主条码
 	ProductModel  string         `json:"model"`          // 商品型号
-	Weight        int            `json:"weight"`         // 重量
+	Weight        float64        `json:"weight"`         // 重量
 	Specification string         `json:"specification"`  // 规格
 	TargetAddress string         `json:"target_address"` // 目标地址
 	Manual        string         `json:"manual"`         // 说明书
@@ -47,10 +47,9 @@ func (s *SubMaterialArr) Scan(value interface{}) error {
 	return nil
 }
 
-// InitDB 初始化数据库连接
-func InitDB() *gorm.DB {
+func InitDB(dbName string) *gorm.DB {
 	fmt.Println("InitDB")
-	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open(dbName), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
