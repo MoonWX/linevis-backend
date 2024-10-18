@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"linevis-backend/database"
@@ -8,6 +9,14 @@ import (
 )
 
 func SetupRoutes(r *gin.Engine, db *gorm.DB) {
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:1420"}, // 允许的域名
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Accept"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+	}))
+
 	// Create
 	r.POST("/products", func(c *gin.Context) {
 		var product database.Product
