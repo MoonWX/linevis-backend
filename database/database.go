@@ -14,7 +14,7 @@ type Product struct {
 	Name          string         `json:"name"`           // 商品名称
 	MainBarcode   string         `json:"main_barcode"`   // 主条码
 	ProductModel  string         `json:"model"`          // 商品型号
-	Weight        float64        `json:"weight"`         // 重量
+	Weight        string         `json:"weight"`         // 重量
 	Specification string         `json:"specification"`  // 规格
 	TargetAddress string         `json:"target_address"` // 目标地址
 	Manual        string         `json:"manual"`         // 说明书
