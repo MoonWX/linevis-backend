@@ -42,9 +42,8 @@ go run main.go
     - 类型：`String`
     - 示例：`"test"`
 - `weight`： 重量
-    - 类型：`Float64`
-    - 单位：`kg`
-    - 示例：`10`
+    - 类型：`String`
+    - 示例：`10kg`
 - `specification`： 规格
     - 类型：`String`
     - 示例：`"test"`
@@ -106,7 +105,7 @@ go run main.go
     "name": "Test2",
     "main_barcode": "11111111",
     "model": "test",
-    "weight": 10,
+    "weight": "10",
     "specification": "test",
     "target_address": "test",
     "manual": "test1.png",
@@ -133,7 +132,7 @@ go run main.go
     "name": "Test3",
     "main_barcode": "11111111",
     "model": "test",
-    "weight": 10,
+    "weight": "10",
     "specification": "test",
     "target_address": "test",
     "manual": "test1.png",
@@ -169,7 +168,7 @@ go run main.go
   "name": "Test2",
   "main_barcode": "11111111",
   "model": "test",
-  "weight": 10,
+  "weight": "10",
   "specification": "test",
   "target_address": "test",
   "manual": "test1.png",
@@ -199,7 +198,7 @@ go run main.go
   "name": "Test4",
   "main_barcode": "11111111",
   "model": "test",
-  "weight": 10,
+  "weight": "10",
   "specification": "test",
   "target_address": "test",
   "manual": "test1.png",
@@ -229,7 +228,7 @@ go run main.go
   "name": "Test4",
   "main_barcode": "11111111",
   "model": "test",
-  "weight": 10,
+  "weight": "10",
   "specification": "test",
   "target_address": "test",
   "manual": "test1.png",
@@ -260,7 +259,7 @@ go run main.go
   "name": "Test1",
   "main_barcode": "88888888",
   "model": "test",
-  "weight": 10,
+  "weight": "10",
   "specification": "test",
   "target_address": "test",
   "manual": "test1.png",
@@ -290,7 +289,7 @@ go run main.go
     "name": "Test2",
     "main_barcode": "88888888",
     "model": "test",
-    "weight": 10,
+    "weight": "10",
     "specification": "test",
     "target_address": "test",
     "manual": "test1.png",
