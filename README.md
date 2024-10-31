@@ -321,6 +321,23 @@ go run main.go
 }
 ```
 
+### 8. 上传电子指导书
+- 请求方式：`PUT`
+- 请求地址：`/manual/:id`
+- 地址示例：`/manual/1`
+- 请求体类型：`multipart/form-data`
+- 请求体实例详见根目录下的Postman示例Collection
+- 该请求会将上传的图片重命名为UUID存到运行目录下的manuals文件夹内
+- 返回示例：
+```json
+{
+  "filename": "b396cc00-2f4a-458a-99a7-3bd292804219.jpg",
+  "message": "File uploaded successfully",
+  "path": "%PROGRAM_PATH%\\manuals\\b396cc00-2f4a-458a-99a7-3bd292804219.jpg",
+  "size": 5161270
+}
+```
+
 ## 调试完毕
 
 构建项目：
@@ -334,13 +351,13 @@ go build linevis-backend
 Windows CMD:
 ```shell
 set GIN_MODE=release
-go build linevis-backend
+go build -ldflags -H=windowsgui linevis-backend
 ```
 
 Windows PowerShell:
 ```shell
 $env:GIN_MODE="release"
-go build linevis-backend
+go build -ldflags -H=windowsgui linevis-backend
 ```
 
 随后，与前端项目一同打包即可。

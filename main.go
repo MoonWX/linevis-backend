@@ -11,6 +11,8 @@ import (
 func main() {
 	fmt.Println("Init")
 
+	gin.SetMode(gin.ReleaseMode)
+
 	db := database.InitDB("linevis.db")
 	r := gin.Default()
 	routes.SetupRoutes(r, db)
