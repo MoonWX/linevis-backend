@@ -166,7 +166,7 @@
 			"response": []
 		},
 		{
-			"name": "Upload Manual",
+			"name": "Upload manual",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -180,6 +180,26 @@
 						}
 					]
 				},
+				"url": {
+					"raw": "http://localhost:9999/manual/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"manual",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get manual by id",
+			"request": {
+				"method": "GET",
+				"header": [],
 				"url": {
 					"raw": "http://localhost:9999/manual/1",
 					"protocol": "http",
