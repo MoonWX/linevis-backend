@@ -168,7 +168,7 @@
 		{
 			"name": "Upload Manual",
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "formdata",

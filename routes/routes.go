@@ -35,7 +35,7 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 		c.JSON(http.StatusOK, product)
 	})
 
-	r.PUT("/manual/:id", func(c *gin.Context) {
+	r.POST("/manual/:id", func(c *gin.Context) {
 		var product database.Product
 		var input database.Product
 		var fileService *service.FileService

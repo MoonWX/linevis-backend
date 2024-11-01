@@ -322,7 +322,7 @@ go run main.go
 ```
 
 ### 8. 上传电子指导书
-- 请求方式：`PUT`
+- 请求方式：`POST`
 - 请求地址：`/manual/:id`
 - 地址示例：`/manual/1`
 - 请求体类型：`multipart/form-data`
