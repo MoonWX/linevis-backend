@@ -9,6 +9,8 @@ import (
 	"linevis-backend/service"
 	"log"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -95,6 +97,61 @@ func SetupRoutes(r *gin.Engine, db *gorm.DB) {
 			"filename": result.FileName,
 			"size":     result.Size,
 		})
+	})
+
+	r.GET("/manual/:id", func(c *gin.Context) {
+		var fileService *service.FileService
+		// 1. 先从数据库获取产品信息
+		var product database.Product
+		if err := db.First(&product, c.Param("id")).Error; err != nil {
+			c.JSON(http.StatusNotFound, gin.H{"error": "product not found"})
+			return
+		}
+
+		// 2. 检查是否有手册文件
+		if product.Manual == "" {
+			c.JSON(http.StatusNotFound, gin.H{"error": "no manual file found"})
+			return
+		}
+
+		// 3. 初始化文件服务
+		fileService, err := service.NewFileService("manuals")
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to initialize file service"})
+			return
+		}
+
+		// 4. 获取文件路径
+		filePath := fileService.GetFilePath(product.Manual)
+
+		// 5. 检查文件是否存在
+		if _, err := os.Stat(filePath); os.IsNotExist(err) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "manual file not found"})
+			return
+		}
+
+		// 6. 设置响应头，指定为图片
+		c.Header("Content-Description", "File Transfer")
+		c.Header("Content-Transfer-Encoding", "binary")
+		c.Header("Content-Disposition", "inline")
+
+		// 根据文件扩展名设置正确的 Content-Type
+		ext := strings.ToLower(filepath.Ext(product.Manual))
+		switch ext {
+		case ".jpg", ".jpeg":
+			c.Header("Content-Type", "image/jpeg")
+		case ".png":
+			c.Header("Content-Type", "image/png")
+		case ".gif":
+			c.Header("Content-Type", "image/gif")
+		case ".webp":
+			c.Header("Content-Type", "image/webp")
+		default:
+			c.Header("Content-Type", "image/jpeg") // 默认假设为 JPEG
+		}
+
+		// 7. 发送文件
+		c.File(filePath)
 	})
 
 	// Read

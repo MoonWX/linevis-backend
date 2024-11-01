@@ -1,4 +1,3 @@
-// service/file_service.go
 package service
 
 import (
@@ -127,6 +126,37 @@ func (s *FileService) SaveUploadedFileWithName(file *multipart.FileHeader, strat
 		FileName: newFilename,
 		Size:     written,
 	}, nil
+}
+
+// GetFile 获取指定文件并返回文件信息
+func (s *FileService) GetFile(filename string) (*os.File, error) {
+	// 构建完整的文件路径
+	fullPath := filepath.Join(s.uploadDir, filename)
+
+	// 检查文件是否存在
+	if _, err := os.Stat(fullPath); os.IsNotExist(err) {
+		return nil, fmt.Errorf("file not found: %s", filename)
+	}
+
+	// 打开文件
+	file, err := os.Open(fullPath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open file: %v", err)
+	}
+
+	return file, nil
+}
+
+// GetFilePath 获取文件的完整路径
+func (s *FileService) GetFilePath(filename string) string {
+	return filepath.Join(s.uploadDir, filename)
+}
+
+// FileExists 检查文件是否存在
+func (s *FileService) FileExists(filename string) bool {
+	fullPath := filepath.Join(s.uploadDir, filename)
+	_, err := os.Stat(fullPath)
+	return err == nil
 }
 
 func (s *FileService) SaveUploadedFile(file *multipart.FileHeader) (*UploadResult, error) {
